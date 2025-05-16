@@ -1,0 +1,2 @@
+python main.py --dir ~/Code/oCommerce --language "Thai" --include "*.py" "*.js" "*.css" "*.html" "*.txt" --exclude "media/*" "*__pycache__*" "memory-bank/*" "*.sqlite3" "Procfile" "store_app/migrations/*"
+
