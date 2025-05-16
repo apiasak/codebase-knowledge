@@ -1,10 +1,23 @@
 import os
 import re
 import yaml
+import unicodedata # Added for slugify
 from pocketflow import Node, BatchNode
 from utils.crawl_github_files import crawl_github_files
 from utils.call_llm import call_llm
 from utils.crawl_local_files import crawl_local_files
+
+
+# Slugify function
+def slugify(value):
+    """
+    Normalizes string, converts to lowercase, removes non-alpha characters,
+    and converts spaces to hyphens. Handles basic transliteration.
+    """
+    value = unicodedata.normalize('NFKD', str(value)).encode('ascii', 'ignore').decode('ascii')
+    value = re.sub(r'[^\w\s-]', '', value).strip().lower()
+    value = re.sub(r'[-\s]+', '-', value)
+    return value
 
 
 # Helper to get content for specific file indices
@@ -561,11 +574,9 @@ class WriteChapters(BatchNode):
                 chapter_name = abstractions[abstraction_index][
                     "name"
                 ]  # Potentially translated name
-                # Create safe filename (from potentially translated name)
-                safe_name = "".join(
-                    c if c.isalnum() else "_" for c in chapter_name
-                ).lower()
-                filename = f"{i+1:02d}_{safe_name}.md"
+                # Create slug filename (from potentially translated name)
+                slug = slugify(chapter_name)
+                filename = f"{i+1:02d}_{slug}.md"
                 # Format with link (using potentially translated name)
                 all_chapters.append(f"{chapter_num}. [{chapter_name}]({filename})")
                 # Store mapping of chapter index to filename for linking
@@ -821,11 +832,9 @@ class CombineTutorial(Node):
                 abstraction_name = abstractions[abstraction_index][
                     "name"
                 ]  # Potentially translated name
-                # Sanitize potentially translated name for filename
-                safe_name = "".join(
-                    c if c.isalnum() else "_" for c in abstraction_name
-                ).lower()
-                filename = f"{i+1:02d}_{safe_name}.md"
+                # Sanitize potentially translated name for filename using slugify
+                slug = slugify(abstraction_name)
+                filename = f"{i+1:02d}_{slug}.md"
                 index_content += f"{i+1}. [{abstraction_name}]({filename})\n"  # Use potentially translated name in link text
 
                 # Add attribution to chapter content (using English fixed string)
