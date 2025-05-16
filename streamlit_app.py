@@ -5,6 +5,7 @@ import shlex
 import io
 import zipfile
 from pathlib import Path
+import datetime # Added for timestamping
 
 # Initialize session state variables
 if 'output_lines' not in st.session_state:
@@ -72,7 +73,7 @@ output_dir_input = st.sidebar.text_input(
 )
 language = st.sidebar.text_input(
     "Tutorial Language (Optional):",
-    value="english",
+    value="Thai",
     help="Default: english",
     key="language"
 )
@@ -81,11 +82,13 @@ language = st.sidebar.text_input(
 st.sidebar.subheader("Filtering Options")
 include_patterns_str = st.sidebar.text_area(
     "Include Patterns (Optional, space or newline separated):",
+    value="*.py *.js *.css *.html *.txt",
     help="e.g., *.py *.js",
     key="include_patterns"
 )
 exclude_patterns_str = st.sidebar.text_area(
     "Exclude Patterns (Optional, space or newline separated):",
+    value="media/* *__pycache__* memory-bank/* *.sqlite3 Procfile store_app/migrations/*",
     help="e.g., tests/* docs/*",
     key="exclude_patterns"
 )
@@ -206,9 +209,11 @@ if run_button:
                 cwd=os.getcwd()
             )
             for line in process.stdout:
-                st.session_state.current_output_display += line
-                st.session_state.output_lines.append(line)
-                print(line, end='') # Print to the terminal
+                timestamp = datetime.datetime.now().strftime("%H:%M:%S")
+                log_line_with_ts = f"[{timestamp}] {line}"
+                st.session_state.current_output_display += log_line_with_ts
+                st.session_state.output_lines.append(log_line_with_ts) # Store with timestamp too
+                print(log_line_with_ts, end='') # Print to the terminal with timestamp
             
             process.wait()
             st.session_state.output_lines.append(f"\nProcess finished with exit code {process.returncode}")
