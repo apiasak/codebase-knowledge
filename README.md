@@ -1,28 +1,42 @@
-<h1 align="center">Turns Codebase into Easy Tutorial with AI</h1>
+# 🚀 Code2Tutorial by Data-Espresso
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
- <a href="https://discord.gg/hUHHE9Sa6T">
-    <img src="https://img.shields.io/discord/1346833819172601907?logo=discord&style=flat">
-</a>
-> *Ever stared at a new codebase written by others feeling completely lost? This tutorial shows you how to build an AI agent that analyzes GitHub repositories and creates beginner-friendly tutorials explaining exactly how the code works.*
 
-<p align="center">
-  <img
-    src="./assets/banner.png" width="800"
-  />
-</p>
+> *"เคยเจอปัญหาไหมครับ? มีโค้ดในบริษัทที่มีคนเขียนไว้แล้วคุณต้องมานั่งตีความเอง หรืออยากนำ AI มาใช้แต่ไม่รู้จะเริ่มเรียนรู้จากไหน? เครื่องมือนี้จะช่วยให้ธุรกิจของคุณเข้าใจโค้ดและเทคโนโลยี AI ได้ง่ายขึ้น ประหยัดเวลาและทรัพยากรของบริษัท!"*
 
-This is a tutorial project of [Pocket Flow](https://github.com/The-Pocket/PocketFlow), a 100-line LLM framework. It crawls GitHub repositories and builds a knowledge base from the code. It analyzes entire codebases to identify core abstractions and how they interact, and transforms complex code into beginner-friendly tutorials with clear visualizations.
 
-- Check out the [YouTube Development Tutorial](https://youtu.be/AFY67zOpbSo) for more!
+## 📊 ปัญหาของ SME ในยุค AI
 
-- Check out the [Substack Post Tutorial](https://zacharyhuang.substack.com/p/ai-codebase-knowledge-builder-full) for more!
+**ผู้ประกอบการ SME และผู้บริหารหลายคนกำลังเผชิญกับความท้าทายในยุค AI:**
 
-&nbsp;&nbsp;**🔸 🎉 Reached Hacker News Front Page** (April 2025) with >900 up‑votes:  [Discussion »](https://news.ycombinator.com/item?id=43739456)
+- มีโค้ดเก่าในบริษัทที่ไม่มีคนเข้าใจ (เพราะคนเขียนลาออกไปแล้ว!)
+- ต้องการนำ AI มาใช้แต่ไม่รู้จะเริ่มศึกษาจากตรงไหน
+- มีทรัพยากรบุคลากรจำกัด ไม่มีเวลาศึกษาโค้ดหรือเทคโนโลยีใหม่ๆ
+- พยายามปรับปรุงระบบ IT แต่กลัวว่าจะทำให้ระบบเดิมพัง
+- ต้องการสร้างเอกสารคู่มือหรือบทเรียนสำหรับพนักงานใหม่
 
-&nbsp;&nbsp;**🔸 🎊 Online Service Now Live!** (May&nbsp;2025) Try our new online version at [https://code2tutorial.com/](https://code2tutorial.com/) – just paste a GitHub link, no installation needed!
+## ☕ เครื่องมือจาก Data-Espresso
 
-## ⭐ Example Results for Popular GitHub Repositories!
+นี่คือเครื่องมือที่ Data-Espresso พัฒนาขึ้นเพื่อช่วยให้ธุรกิจของคุณเข้าใจโค้ดและเทคโนโลยีได้ง่ายขึ้น โดยการใช้ **AI วิเคราะห์โค้ดและสร้างบทเรียนอัตโนมัติ** ที่เข้าใจง่าย!
+
+เครื่องมือนี้สร้างมาจาก [Pocket Flow](https://github.com/The-Pocket/PocketFlow) ซึ่งเป็น LLM framework ขนาดเพียง 100 บรรทัด ที่ช่วยให้คุณสามารถ:
+
+- **วิเคราะห์โค้ดเบสทั้งโปรเจค** ไม่ว่าจะเป็นโค้ดในบริษัทหรือโค้ดจาก GitHub
+- **สร้างเอกสารอธิบายอัตโนมัติ** ที่เข้าใจง่ายสำหรับคนที่ไม่ใช่โปรแกรมเมอร์
+- **ค้นหาแนวคิดหลักและความสัมพันธ์** ของโค้ดโดยไม่ต้องอ่านทีละบรรทัด
+- **สร้างภาพประกอบที่ชัดเจน** ช่วยให้เห็นภาพรวมการทำงานของระบบ
+
+💡 **ในความเห็นของผม:** เครื่องมือนี้เหมาะมากสำหรับ SME ที่ต้องการเข้าใจระบบ IT หรือโค้ดในบริษัทโดยไม่ต้องพึ่งพาโปรแกรมเมอร์คนเดิม หรือผู้บริหารที่อยากเข้าใจเทคโนโลยี AI แต่ไม่มีเวลามานั่งอ่านโค้ดทีละบรรทัด
+
+## 🎯 ประโยชน์สำหรับธุรกิจ SME
+
+1. **ลดการพึ่งพาบุคลากร** - ไม่ต้องกังวลเมื่อโปรแกรมเมอร์ลาออก
+2. **เรียนรู้ AI ได้เร็วขึ้น** - วิเคราะห์โค้ด AI ให้เข้าใจง่ายเพื่อนำมาประยุกต์ใช้
+3. **พัฒนาบุคลากร** - สร้างคู่มือและบทเรียนให้พนักงานเข้าใจระบบได้รวดเร็ว
+4. **ลดเวลาและต้นทุน** - จากเดิมที่ต้องใช้เวลาวิเคราะห์โค้ดเป็นวัน เหลือเพียงไม่กี่นาที
+5. **ตัดสินใจได้ดีขึ้น** - เข้าใจระบบ IT ในองค์กรได้อย่างถ่องแท้ก่อนตัดสินใจปรับปรุง
+
+## ⭐ ตัวอย่างที่สร้างโดย AI ทั้งหมด!
 
 <p align="center">
     <img
@@ -30,153 +44,120 @@ This is a tutorial project of [Pocket Flow](https://github.com/The-Pocket/Pocket
     />
 </p>
 
-🤯 All these tutorials are generated **entirely by AI** by crawling the GitHub repo!
+🤯 บทเรียนทั้งหมดนี้สร้างโดย **AI ทั้งหมด** จากการวิเคราะห์โค้ด!
 
-- [AutoGen Core](https://the-pocket.github.io/PocketFlow-Tutorial-Codebase-Knowledge/AutoGen%20Core) - Build AI teams that talk, think, and solve problems together like coworkers!
+- [FastAPI](https://the-pocket.github.io/PocketFlow-Tutorial-Codebase-Knowledge/FastAPI) - สร้าง API ความเร็วสูงพร้อมเอกสารอัตโนมัติที่ลูกค้าจะชอบ!
+- [Flask](https://the-pocket.github.io/PocketFlow-Tutorial-Codebase-Knowledge/Flask) - สร้างเว็บแอปด้วยโค้ดน้อยนิดที่ขยายได้จาก prototype ไปถึง production!
+- [Requests](https://the-pocket.github.io/PocketFlow-Tutorial-Codebase-Knowledge/Requests) - คุยกับอินเทอร์เน็ตด้วย Python โค้ดที่ง่ายจนรู้สึกว่าโกง!
+- [AutoGen Core](https://the-pocket.github.io/PocketFlow-Tutorial-Codebase-Knowledge/AutoGen%20Core) - สร้างทีม AI ที่คุยกัน คิด และแก้ปัญหาร่วมกันเหมือนพนักงานในบริษัท!
+- [และอื่นๆ อีกมากมาย...](https://github.com/The-Pocket/PocketFlow-Tutorial-Codebase-Knowledge/discussions)
 
-- [Browser Use](https://the-pocket.github.io/PocketFlow-Tutorial-Codebase-Knowledge/Browser%20Use) - Let AI surf the web for you, clicking buttons and filling forms like a digital assistant!
+### #กรณีศึกษา: บริษัทที่ใช้เครื่องมือนี้
 
-- [Celery](https://the-pocket.github.io/PocketFlow-Tutorial-Codebase-Knowledge/Celery) - Supercharge your app with background tasks that run while you sleep!
+1. **บริษัท A (ธุรกิจอีคอมเมิร์ซ)** - ใช้วิเคราะห์ระบบเดิมที่พนักงาน IT คนเก่าสร้างไว้ ทำให้สามารถอัปเดตเว็บไซต์ได้โดยไม่ต้องจ้างที่ปรึกษาเข้ามาศึกษาระบบใหม่
+   
+2. **บริษัท B (โรงงานผลิต)** - ใช้วิเคราะห์ระบบ ERP ที่ใช้งานมานาน 10 ปี ช่วยให้ฝ่ายบริหารเข้าใจว่าควรอัปเกรดส่วนไหนบ้าง
 
-- [Click](https://the-pocket.github.io/PocketFlow-Tutorial-Codebase-Knowledge/Click) - Turn Python functions into slick command-line tools with just a decorator!
+3. **บริษัท C (SME ด้านบริการ)** - ใช้ศึกษาโค้ด AI จาก GitHub เพื่อเรียนรู้และนำมาประยุกต์ใช้กับธุรกิจ ทำให้เริ่มใช้ AI ได้เร็วกว่าคู่แข่ง
 
-- [Codex](https://the-pocket.github.io/PocketFlow-Tutorial-Codebase-Knowledge/Codex) - Turn plain English into working code with this AI terminal wizard!
+## 🚀 เริ่มต้นใช้งาน
 
-- [Crawl4AI](https://the-pocket.github.io/PocketFlow-Tutorial-Codebase-Knowledge/Crawl4AI) - Train your AI to extract exactly what matters from any website!
+### เตรียม API Key
 
-- [CrewAI](https://the-pocket.github.io/PocketFlow-Tutorial-Codebase-Knowledge/CrewAI) - Assemble a dream team of AI specialists to tackle impossible problems!
+ก่อนใช้งานเครื่องมือนี้ คุณต้องขอ Gemini API key ก่อน:
 
-- [DSPy](https://the-pocket.github.io/PocketFlow-Tutorial-Codebase-Knowledge/DSPy) - Build LLM apps like Lego blocks that optimize themselves!
+1. ไปที่ [Google AI Studio](https://aistudio.google.com/app/apikey)
+2. สร้าง API key ใหม่หรือใช้ key ที่มีอยู่แล้ว
+3. คัดลอก API key เพื่อใช้กับแอปพลิเคชัน
 
-- [FastAPI](https://the-pocket.github.io/PocketFlow-Tutorial-Codebase-Knowledge/FastAPI) - Create APIs at lightning speed with automatic docs that clients will love!
+### วิธีที่ง่ายที่สุด: รันผ่าน Streamlit Web Interface
 
-- [Flask](https://the-pocket.github.io/PocketFlow-Tutorial-Codebase-Knowledge/Flask) - Craft web apps with minimal code that scales from prototype to production!
-
-- [Google A2A](https://the-pocket.github.io/PocketFlow-Tutorial-Codebase-Knowledge/Google%20A2A) - The universal language that lets AI agents collaborate across borders!
-
-- [LangGraph](https://the-pocket.github.io/PocketFlow-Tutorial-Codebase-Knowledge/LangGraph) - Design AI agents as flowcharts where each step remembers what happened before!
-
-- [LevelDB](https://the-pocket.github.io/PocketFlow-Tutorial-Codebase-Knowledge/LevelDB) - Store data at warp speed with Google's engine that powers blockchains!
-
-- [MCP Python SDK](https://the-pocket.github.io/PocketFlow-Tutorial-Codebase-Knowledge/MCP%20Python%20SDK) - Build powerful apps that communicate through an elegant protocol without sweating the details!
-
-- [NumPy Core](https://the-pocket.github.io/PocketFlow-Tutorial-Codebase-Knowledge/NumPy%20Core) - Master the engine behind data science that makes Python as fast as C!
-
-- [OpenManus](https://the-pocket.github.io/PocketFlow-Tutorial-Codebase-Knowledge/OpenManus) - Build AI agents with digital brains that think, learn, and use tools just like humans do!
-
-- [PocketFlow](https://the-pocket.github.io/PocketFlow-Tutorial-Codebase-Knowledge/PocketFlow) - 100-line LLM framework. Let Agents build Agents!
-
-- [Pydantic Core](https://the-pocket.github.io/PocketFlow-Tutorial-Codebase-Knowledge/Pydantic%20Core) - Validate data at rocket speed with just Python type hints!
-
-- [Requests](https://the-pocket.github.io/PocketFlow-Tutorial-Codebase-Knowledge/Requests) - Talk to the internet in Python with code so simple it feels like cheating!
-
-- [SmolaAgents](https://the-pocket.github.io/PocketFlow-Tutorial-Codebase-Knowledge/SmolaAgents) - Build tiny AI agents that punch way above their weight class!
-
-- Showcase Your AI-Generated Tutorials in [Discussions](https://github.com/The-Pocket/PocketFlow-Tutorial-Codebase-Knowledge/discussions)!
-
-## 🚀 Getting Started
-
-1. Clone this repository
+1. Clone repository นี้
    ```bash
-   git clone https://github.com/The-Pocket/PocketFlow-Tutorial-Codebase-Knowledge
+   git clone https://github.com/apiasak/codebase-knowledge
    ```
 
-3. Install dependencies:
+2. ติดตั้ง dependencies:
    ```bash
    pip install -r requirements.txt
    ```
 
-4. Set up LLM in [`utils/call_llm.py`](./utils/call_llm.py) by providing credentials. By default, you can use the [AI Studio key](https://aistudio.google.com/app/apikey) with this client for Gemini Pro 2.5:
-
-   ```python
-   client = genai.Client(
-     api_key=os.getenv("GEMINI_API_KEY", "your-api_key"),
-   )
-   ```
-
-   You can use your own models. We highly recommend the latest models with thinking capabilities (Claude 3.7 with thinking, O1). You can verify that it is correctly set up by running:
+3. เริ่มใช้งาน Streamlit app:
    ```bash
-   python utils/call_llm.py
+   streamlit run streamlit_app.py
    ```
 
-5. Generate a complete codebase tutorial by running the main script:
-    ```bash
-    # Analyze a GitHub repository
-    python main.py --repo https://github.com/username/repo --include "*.py" "*.js" --exclude "tests/*" --max-size 50000
+4. ในหน้า web interface:
+   - วาง Gemini API key และคลิก "Test API Key"
+   - เลือกแหล่งที่มา (GitHub repo หรือโค้ดในบริษัท)
+   - ตั้งค่าตัวเลือกและคลิก "Generate Tutorial"
 
-    # Or, analyze a local directory
-    python main.py --dir /path/to/your/codebase --include "*.py" --exclude "*test*"
-
-    # Or, generate a tutorial in Chinese
-    python main.py --repo https://github.com/username/repo --language "Chinese"
-    ```
-
-    - `--repo` or `--dir` - Specify either a GitHub repo URL or a local directory path (required, mutually exclusive)
-    - `-n, --name` - Project name (optional, derived from URL/directory if omitted)
-    - `-t, --token` - GitHub token (or set GITHUB_TOKEN environment variable)
-    - `-o, --output` - Output directory (default: ./output)
-    - `-i, --include` - Files to include (e.g., "`*.py`" "`*.js`")
-    - `-e, --exclude` - Files to exclude (e.g., "`tests/*`" "`docs/*`")
-    - `-s, --max-size` - Maximum file size in bytes (default: 100KB)
-    - `--language` - Language for the generated tutorial (default: "english")
-    - `--max-abstractions` - Maximum number of abstractions to identify (default: 10)
-    - `--no-cache` - Disable LLM response caching (default: caching enabled)
-
-The application will crawl the repository, analyze the codebase structure, generate tutorial content in the specified language, and save the output in the specified directory (default: ./output).
-
+### ตัวเลือกอื่นๆ
 
 <details>
- 
-<summary> 🐳 <b>Running with Docker</b> </summary>
+<summary>รันด้วย Docker (แนะนำสำหรับการ Deploy) 🐳</summary>
 
-To run this project in a Docker container, you'll need to pass your API keys as environment variables. 
+วิธีที่ง่ายที่สุดในการรันแอปพลิเคชันนี้โดยไม่ต้องติดตั้ง dependencies คือใช้ Docker:
 
-1. Build the Docker image
+1. Clone repository นี้
    ```bash
-   docker build -t pocketflow-app .
+   git clone https://github.com/apiasak/codebase-knowledge
    ```
 
-2. Run the container
+2. รันด้วย docker-compose:
+   ```bash
+   GEMINI_API_KEY=your_api_key docker-compose up
+   ```
 
-   You'll need to provide your `GEMINI_API_KEY` for the LLM to function. If you're analyzing private GitHub repositories or want to avoid rate limits, also provide your `GITHUB_TOKEN`.
-   
-   Mount a local directory to `/app/output` inside the container to access the generated tutorials on your host machine.
-   
-   **Example for analyzing a public GitHub repository:**
-   
-   ```bash
-   docker run -it --rm \
-     -e GEMINI_API_KEY="YOUR_GEMINI_API_KEY_HERE" \
-     -v "$(pwd)/output_tutorials":/app/output \
-     pocketflow-app --repo https://github.com/username/repo
-   ```
-   
-   **Example for analyzing a local directory:**
-   
-   ```bash
-   docker run -it --rm \
-     -e GEMINI_API_KEY="YOUR_GEMINI_API_KEY_HERE" \
-     -v "/path/to/your/local_codebase":/app/code_to_analyze \
-     -v "$(pwd)/output_tutorials":/app/output \
-     pocketflow-app --dir /app/code_to_analyze
-   ```
+3. เข้าถึง Streamlit interface ที่ http://localhost:8501
+
 </details>
 
-## 💡 Development Tutorial
+<details>
+<summary>รันผ่าน Command Line Interface ⌨️</summary>
 
-- I built using [**Agentic Coding**](https://zacharyhuang.substack.com/p/agentic-coding-the-most-fun-way-to), the fastest development paradigm, where humans simply [design](docs/design.md) and agents [code](flow.py).
+คุณยังสามารถรันแอปพลิเคชันโดยตรงจาก command line:
 
-- The secret weapon is [Pocket Flow](https://github.com/The-Pocket/PocketFlow), a 100-line LLM framework that lets Agents (e.g., Cursor AI) build for you
+1. Clone repository นี้
+   ```bash
+   git clone https://github.com/apiasak/codebase-knowledge
+   ```
 
-- Check out the Step-by-step YouTube development tutorial:
+2. ติดตั้ง dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-<br>
-<div align="center">
-  <a href="https://youtu.be/AFY67zOpbSo" target="_blank">
-    <img src="./assets/youtube_thumbnail.png" width="500" alt="Pocket Flow Codebase Tutorial" style="cursor: pointer;">
-  </a>
-</div>
-<br>
+3. ตั้งค่า Gemini API key:
+   ```bash
+   export GEMINI_API_KEY=your_api_key
+   ```
 
+4. สร้างบทเรียนเกี่ยวกับโค้ดโดยรันสคริปต์หลัก:
+    ```bash
+    # วิเคราะห์ GitHub repository
+    python main.py --repo https://github.com/username/repo --include "*.py" "*.js" --exclude "tests/*" --max-size 50000
 
+    # หรือวิเคราะห์โค้ดในบริษัท
+    python main.py --dir /path/to/your/codebase --include "*.py" --exclude "*test*"
+    ```
 
+</details>
+
+## 📞 สนใจปรึกษาเพิ่มเติม
+
+Data-Espresso พร้อมให้คำปรึกษาและช่วยธุรกิจของคุณเข้าใจและนำ AI ไปใช้จริง ไม่ว่าจะเป็นการวิเคราะห์โค้ดเดิมในบริษัท หรือการอบรมพนักงานให้เข้าใจเทคโนโลยี AI
+
+🔍 **บริการของเรา:**
+- วิเคราะห์โค้ดและระบบ IT ในบริษัท
+- ให้คำปรึกษาการนำ AI มาใช้ในธุรกิจ
+- อบรมพนักงานและผู้บริหารเกี่ยวกับ AI
+- พัฒนาโซลูชัน AI ที่เหมาะกับธุรกิจคุณ
+
+ติดต่อเราได้ที่:
+- Email: dataespresso.cafe@gmail.com
+- Tel: 093-926-5551
+- Line: @data-espresso
+
+#สรุป
+เครื่องมือ Code2Tutorial ช่วยให้ธุรกิจ SME และผู้บริหารเข้าใจโค้ดและเทคโนโลยี AI ได้อย่างรวดเร็ว ประหยัดเวลาและทรัพยากร ลดการพึ่งพาบุคลากร และช่วยให้ตัดสินใจเกี่ยวกับการพัฒนาระบบ IT ได้ดีขึ้น เป็นก้าวแรกสู่การนำ AI มาใช้ในธุรกิจอย่างมีประสิทธิภาพ! 🚀📊☕

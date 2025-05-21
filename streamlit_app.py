@@ -6,6 +6,8 @@ import io
 import zipfile
 from pathlib import Path
 import datetime # Added for timestamping
+import requests
+import json
 
 # Initialize session state variables
 if 'output_lines' not in st.session_state:
@@ -24,11 +26,77 @@ if 'run_button_clicked_ever' not in st.session_state: # To track if a run was at
     st.session_state.run_button_clicked_ever = False
 if 'current_output_display' not in st.session_state: # For the main output text area
     st.session_state.current_output_display = "Output will appear here..."
+if 'api_key_valid' not in st.session_state:
+    st.session_state.api_key_valid = False
 
 # --- UI SECTION ---
 st.title("Codebase to Tutorial AI - GUI")
 
-st.sidebar.header("Configuration")
+# Function to validate Gemini API key
+def validate_gemini_api_key(api_key):
+    if not api_key or api_key.strip() == "":
+        return False, "API key cannot be empty"
+    
+    try:
+        # Test API endpoint
+        headers = {
+            "Content-Type": "application/json",
+            "x-goog-api-key": api_key
+        }
+        data = {
+            "contents": [{"parts": [{"text": "Hello, please respond with 'API key is valid'"}]}],
+            "generationConfig": {"maxOutputTokens": 20}
+        }
+        response = requests.post(
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent",
+            headers=headers,
+            json=data
+        )
+        
+        if response.status_code == 200:
+            return True, "API key is valid"
+        elif response.status_code == 400:
+            return False, "API key format is invalid"
+        elif response.status_code == 401:
+            return False, "Invalid API key"
+        elif response.status_code == 403:
+            return False, "API key doesn't have permission to use Gemini"
+        else:
+            return False, f"Unknown error (status code: {response.status_code})"
+    except Exception as e:
+        return False, f"Error testing API key: {str(e)}"
+
+st.sidebar.header("API Configuration")
+gemini_api_key = st.sidebar.text_input(
+    "Gemini API Key (Required):",
+    type="password",
+    help="Get your key from https://aistudio.google.com/app/apikey",
+    key="gemini_api_key"
+)
+
+# Add a test button for API key
+col1, col2 = st.sidebar.columns([1, 1])
+with col1:
+    test_key_button = st.button("Test API Key", disabled=not gemini_api_key)
+with col2:
+    if st.session_state.get('api_key_valid'):
+        st.success("✅ Valid")
+    elif gemini_api_key:
+        st.error("❌ Not Validated")
+
+# Test the API key when the button is clicked
+if test_key_button:
+    with st.sidebar.status("Testing API key..."):
+        is_valid, message = validate_gemini_api_key(gemini_api_key)
+        if is_valid:
+            st.session_state.api_key_valid = True
+            st.sidebar.success(f"✅ {message}")
+        else:
+            st.session_state.api_key_valid = False
+            st.sidebar.error(f"❌ {message}")
+    st.rerun()
+
+st.sidebar.header("Source Configuration")
 
 # Source Configuration
 source_type = st.sidebar.radio(
@@ -139,6 +207,14 @@ if run_button:
     st.session_state.current_output_display = "Starting process...\n\n--- Log from main.py execution ---\n"
 
     # Validate Inputs
+    if not gemini_api_key.strip():
+        st.error("Gemini API Key is required.")
+        st.session_state.process_running = False
+        st.stop()
+        
+    if not st.session_state.get('api_key_valid', False):
+        st.warning("API key has not been validated. Please click 'Test API Key' to verify it works.")
+    
     if source_type == "GitHub Repository" and not repo_url.strip():
         st.error("GitHub Repository URL is required.")
         st.session_state.process_running = False
@@ -199,6 +275,10 @@ if run_button:
 
     with st.spinner(f"⏳ Generating tutorial for '{display_source_name}'... This may take several minutes. Please wait."):
         try:
+            # Create an environment copy with the API key
+            env_with_api_key = os.environ.copy()
+            env_with_api_key["GEMINI_API_KEY"] = gemini_api_key
+            
             process = subprocess.Popen(
                 command,
                 stdout=subprocess.PIPE,
@@ -206,7 +286,8 @@ if run_button:
                 text=True,
                 bufsize=1,
                 universal_newlines=True,
-                cwd=os.getcwd()
+                cwd=os.getcwd(),
+                env=env_with_api_key
             )
             for line in process.stdout:
                 timestamp = datetime.datetime.now().strftime("%H:%M:%S")
