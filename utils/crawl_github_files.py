@@ -59,6 +59,26 @@ def crawl_github_files(
 
         return include_file
 
+    def get_total_files(owner: str, repo: str, ref: str, path: str) -> int:
+        """Return total number of files matching patterns."""
+        url = f"https://api.github.com/repos/{owner}/{repo}/git/trees/{ref}?recursive=1"
+        response = requests.get(url, headers=headers)
+        if response.status_code != 200:
+            return 0
+        tree = response.json().get("tree", [])
+        total = 0
+        for entry in tree:
+            if entry.get("type") != "blob":
+                continue
+            item_path = entry.get("path", "")
+            if path and not item_path.startswith(path):
+                continue
+            rel = item_path[len(path):].lstrip("/") if use_relative_paths and path else item_path
+            name = os.path.basename(rel)
+            if should_include_file(rel, name):
+                total += 1
+        return total
+
     # Detect SSH URL (git@ or .git suffix)
     is_ssh_url = repo_url.startswith("git@") or repo_url.endswith(".git")
 
@@ -72,44 +92,53 @@ def crawl_github_files(
                 print(f"Error cloning repo: {e}")
                 return {"files": {}, "stats": {"error": str(e)}}
 
-            # Attempt to checkout specific commit/branch if in URL
-            # Parse ref and subdir from SSH URL? SSH URLs don't have branch info embedded
-            # So rely on default branch, or user can checkout manually later
-            # Optionally, user can pass ref explicitly in future API
-
-            # Walk directory
             files = {}
             skipped_files = []
 
-            for root, dirs, filenames in os.walk(tmpdirname):
+            all_files = []
+            for root, _, filenames in os.walk(tmpdirname):
                 for filename in filenames:
-                    abs_path = os.path.join(root, filename)
-                    rel_path = os.path.relpath(abs_path, tmpdirname)
+                    all_files.append(os.path.join(root, filename))
 
-                    # Check file size
-                    try:
-                        file_size = os.path.getsize(abs_path)
-                    except OSError:
-                        continue
+            total_files = len(all_files)
+            processed = 0
 
-                    if file_size > max_file_size:
-                        skipped_files.append((rel_path, file_size))
-                        print(f"Skipping {rel_path}: size {file_size} exceeds limit {max_file_size}")
-                        continue
+            for filepath in all_files:
+                rel_path = os.path.relpath(filepath, tmpdirname)
+                filename = os.path.basename(filepath)
 
-                    # Check include/exclude patterns
-                    if not should_include_file(rel_path, filename):
-                        print(f"Skipping {rel_path}: does not match include/exclude patterns")
-                        continue
+                # Check file size
+                try:
+                    file_size = os.path.getsize(filepath)
+                except OSError:
+                    continue
 
-                    # Read content
-                    try:
-                        with open(abs_path, "r", encoding="utf-8") as f:
-                            content = f.read()
-                        files[rel_path] = content
-                        print(f"Added {rel_path} ({file_size} bytes)")
-                    except Exception as e:
-                        print(f"Failed to read {rel_path}: {e}")
+                status = "processed"
+                if file_size > max_file_size:
+                    skipped_files.append((rel_path, file_size))
+                    status = "skipped (size limit)"
+                    _print_progress(processed + 1, total_files, rel_path, status)
+                    processed += 1
+                    continue
+
+                if not should_include_file(rel_path, filename):
+                    status = "skipped (excluded)"
+                    _print_progress(processed + 1, total_files, rel_path, status)
+                    processed += 1
+                    continue
+
+                try:
+                    with open(filepath, "r", encoding="utf-8") as f:
+                        content = f.read()
+                    files[rel_path] = content
+                except Exception as e:
+                    status = "skipped (read error)"
+                    _print_progress(processed + 1, total_files, rel_path, status)
+                    processed += 1
+                    continue
+
+                _print_progress(processed + 1, total_files, rel_path, status)
+                processed += 1
 
             return {
                 "files": files,
@@ -120,8 +149,8 @@ def crawl_github_files(
                     "base_path": None,
                     "include_patterns": include_patterns,
                     "exclude_patterns": exclude_patterns,
-                    "source": "ssh_clone"
-                }
+                    "source": "ssh_clone",
+                },
             }
 
     # Parse GitHub URL to extract owner, repo, commit/branch, and path
@@ -139,6 +168,13 @@ def crawl_github_files(
     headers = {"Accept": "application/vnd.github.v3+json"}
     if token:
         headers["Authorization"] = f"token {token}"
+
+    def get_default_branch(owner: str, repo: str) -> str:
+        url = f"https://api.github.com/repos/{owner}/{repo}"
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            return response.json().get("default_branch", "main")
+        return "main"
 
     def fetch_branches(owner: str, repo: str):
         """Get brancshes of the repository"""
@@ -210,9 +246,12 @@ def crawl_github_files(
     # Dictionary to store path -> content mapping
     files = {}
     skipped_files = []
+    total_files = get_total_files(owner, repo, ref or get_default_branch(owner, repo), specific_path)
+    processed_files = 0
     
     def fetch_contents(path):
         """Fetch contents of the repository at a specific path and commit"""
+        nonlocal processed_files
         url = f"https://api.github.com/repos/{owner}/{repo}/contents/{path}"
         params = {"ref": ref} if ref != None else {}
         
@@ -263,14 +302,18 @@ def crawl_github_files(
             if item["type"] == "file":
                 # Check if file should be included based on patterns
                 if not should_include_file(rel_path, item["name"]):
-                    print(f"Skipping {rel_path}: Does not match include/exclude patterns")
+                    status = "skipped (excluded)"
+                    _print_progress(processed_files + 1, total_files, rel_path, status)
+                    processed_files += 1
                     continue
                 
                 # Check file size if available
                 file_size = item.get("size", 0)
                 if file_size > max_file_size:
                     skipped_files.append((item_path, file_size))
-                    print(f"Skipping {rel_path}: File size ({file_size} bytes) exceeds limit ({max_file_size} bytes)")
+                    status = "skipped (size limit)"
+                    _print_progress(processed_files + 1, total_files, rel_path, status)
+                    processed_files += 1
                     continue
                 
                 # For files, get raw content
@@ -287,8 +330,13 @@ def crawl_github_files(
                         
                     if file_response.status_code == 200:
                         files[rel_path] = file_response.text
-                        print(f"Downloaded: {rel_path} ({file_size} bytes) ")
+                        status = "processed"
+                        _print_progress(processed_files + 1, total_files, rel_path, status)
+                        processed_files += 1
                     else:
+                        status = "skipped (download error)"
+                        _print_progress(processed_files + 1, total_files, rel_path, status)
+                        processed_files += 1
                         print(f"Failed to download {rel_path}: {file_response.status_code}")
                 else:
                     # Alternative method if download_url is not available
@@ -300,15 +348,26 @@ def crawl_github_files(
                             if len(content_data["content"]) * 0.75 > max_file_size:  # Approximate size calculation
                                 estimated_size = int(len(content_data["content"]) * 0.75)
                                 skipped_files.append((item_path, estimated_size))
+                                status = "skipped (size limit)"
+                                _print_progress(processed_files + 1, total_files, rel_path, status)
+                                processed_files += 1
                                 print(f"Skipping {rel_path}: Encoded content exceeds size limit")
                                 continue
                                 
                             file_content = base64.b64decode(content_data["content"]).decode('utf-8')
                             files[rel_path] = file_content
-                            print(f"Downloaded: {rel_path} ({file_size} bytes)")
+                            status = "processed"
+                            _print_progress(processed_files + 1, total_files, rel_path, status)
+                            processed_files += 1
                         else:
+                            status = "skipped (format)"
+                            _print_progress(processed_files + 1, total_files, rel_path, status)
+                            processed_files += 1
                             print(f"Unexpected content format for {rel_path}")
                     else:
+                        status = "skipped (error)"
+                        _print_progress(processed_files + 1, total_files, rel_path, status)
+                        processed_files += 1
                         print(f"Failed to get content for {rel_path}: {content_response.status_code}")
             
             elif item["type"] == "dir":
