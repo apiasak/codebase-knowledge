@@ -8,6 +8,12 @@ import fnmatch
 from typing import Union, Set, List, Dict, Tuple, Any
 from urllib.parse import urlparse
 
+
+def _print_progress(current: int, total: int, path: str, status: str) -> None:
+    """Display progress as a percentage with status for each file."""
+    percent = 100.0 * current / total if total else 0
+    print(f"{percent:6.2f}% [{current}/{total}] {status}: {path}")
+
 def crawl_github_files(
     repo_url, 
     token=None, 
