@@ -61,6 +61,18 @@
 3. **บริษัท C (SME ด้านบริการ)** - ใช้ศึกษาโค้ด AI จาก GitHub เพื่อเรียนรู้และนำมาประยุกต์ใช้กับธุรกิจ ทำให้เริ่มใช้ AI ได้เร็วกว่าคู่แข่ง
 
 ## 🚀 เริ่มต้นใช้งาน
+### Quick Start (English)
+
+```bash
+git clone https://github.com/apiasak/codebase-knowledge
+pip install -r requirements.txt
+export GEMINI_API_KEY=your_api_key
+# Launch the web interface
+streamlit run streamlit_app.py
+# Or run from the command line
+python main.py --repo https://github.com/username/repo --include "*.py" --max-size 50000
+```
+
 
 ### เตรียม API Key
 
